@@ -19,12 +19,10 @@ jobs:
         run: |
           git remote add upstream https://github.com/firefly-iii/firefly-iii.git
           git fetch upstream
-
       - name: Rebase fork on top of upstream
         run: |
           git checkout main
           git rebase upstream/main || true
-
       - name: Rewrite changelog.md
         run: |
           # Replace "## X.Y.Z" → "## version-X.Y.Z"
@@ -33,7 +31,6 @@ jobs:
           git config user.email "firefly-mirror-bot@users.noreply.github.com"
           git add changelog.md
           git commit -m "Rewrite changelog for Renovate" || echo "No changes"
-
       - name: Push changes
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
